@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist Escritor Destravado em 48h</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#fc8337">
+    <style>
+        :root {
+            --primary-color: #fc8337;
+            --bg-color: #ECEFF3;
+            --white: #FFFFFF;
+            --black: #000000;
+            --text-secondary: #343436;
+            --border-color: #56585E;
+            --accent-bg: #DAD2C6;
+            --placeholder-color: #9C9595;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--black);
+            line-height: 1.6;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease;
+            padding-bottom: 80px; /* Espaço para o botão flutuante */
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        h1 { font-size: 24px; text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
+
+        /* Components */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover { opacity: 0.9; transform: scale(1.01); }
+
+        .btn-secondary {
+            background-color: var(--border-color);
+            color: var(--white);
+        }
+
+        /* Floating Button */
+        .float-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 90;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        .float-btn:hover { transform: scale(1.1); }
+        .float-btn svg { width: 30px; height: 30px; fill: white; }
+
+        /* Progress Bar SVG - Improved Book */
+        .progress-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .book-svg {
+            width: 140px;
+            height: auto;
+            margin: 0 auto 10px;
+            display: block;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: bold;
+        }
+
+        /* Dashboard */
+        .professor-img {
+            display: block;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+        }
+
+        .quote-box {
+            background-color: var(--accent-bg);
+            padding: 15px;
+            border-radius: var(--radius);
+            font-style: italic;
+            margin-bottom: 20px;
+            text-align: center;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .intro-text {
+            color: var(--text-secondary);
+            white-space: pre-line;
+        }
+
+        /* List Screen */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-color);
+            padding: 10px 0;
+            z-index: 10;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            margin: 20px 0 10px;
+            padding: 12px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            justify-content: space-between;
+        }
+
+        .phase-header-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .phase-toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        .phase-header.collapsed .phase-toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .phase-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            max-height: 2000px; /* Suficiente para os itens */
+        }
+        .phase-content.collapsed {
+            max-height: 0;
+        }
+
+        .point-card {
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .point-card:hover { transform: scale(1.02); }
+
+        .point-title {
+            flex-grow: 1;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Checkbox Styling */
+        .custom-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .custom-checkbox.checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .custom-checkbox svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: white;
+            stroke-width: 3;
+            display: none;
+        }
+
+        .custom-checkbox.checked svg {
+            display: block;
+        }
+
+        /* Details Screen */
+        .details-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .details-header img {
+            margin-bottom: 15px;
+            margin-right: 0 !important;
+        }
+
+        .details-content p { margin-bottom: 15px; }
+        .details-content strong { display: block; margin-top: 15px; }
+
+        .large-check-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .large-check-container .custom-checkbox {
+            width: 40px;
+            height: 40px;
+        }
+
+        .large-check-container .custom-checkbox svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .notes-area {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            resize: none;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .notes-area::placeholder { color: var(--placeholder-color); }
+
+        /* Modal */
+        #modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--radius);
+            max-width: 85%;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-prof {
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid var(--primary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            #app { padding: 15px; }
+            h1 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Floating Home Button (Visible on List and Details) -->
+        <button id="btn-float-home" class="float-btn" style="display: none;" onclick="showScreen('screen-dashboard')">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </button>
+
+        <!-- Dashboard Screen -->
+        <div id="screen-dashboard" class="screen active">
+            <img src="professor-dashboard.jpg" alt="Professor" width="100" height="100" class="professor-img">
+            <h1>Checklist Escritor Destravado em 48h</h1>
+            
+            <div class="progress-container">
+                <svg class="book-svg" viewBox="0 0 100 70">
+                    <!-- Book Cover -->
+                    <path d="M10 5 Q 10 2 13 2 L 87 2 Q 90 2 90 5 L 90 65 Q 90 68 87 68 L 13 68 Q 10 68 10 65 Z" fill="#4A4C52" />
+                    <!-- Spine -->
+                    <rect x="48" y="2" width="4" height="66" fill="#333" />
+                    <!-- Left Page -->
+                    <rect x="15" y="8" width="33" height="52" fill="#f0f0f0" rx="1" />
+                    <rect id="book-fill-left" x="15" y="8" width="0" height="52" fill="var(--primary-color)" rx="1" />
+                    <!-- Right Page -->
+                    <rect x="52" y="8" width="33" height="52" fill="#f0f0f0" rx="1" />
+                    <rect id="book-fill-right" x="52" y="8" width="0" height="52" fill="var(--primary-color)" rx="1" />
+                    <!-- Page Lines -->
+                    <line x1="18" y1="15" x2="45" y2="15" stroke="#ddd" stroke-width="1" />
+                    <line x1="18" y1="25" x2="45" y2="25" stroke="#ddd" stroke-width="1" />
+                    <line x1="18" y1="35" x2="45" y2="35" stroke="#ddd" stroke-width="1" />
+                    <line x1="55" y1="15" x2="82" y2="15" stroke="#ddd" stroke-width="1" />
+                    <line x1="55" y1="25" x2="82" y2="25" stroke="#ddd" stroke-width="1" />
+                    <line x1="55" y1="35" x2="82" y2="35" stroke="#ddd" stroke-width="1" />
+                </svg>
+                <div id="progress-text" class="progress-text">0/22 pontos desbloqueados (0%)</div>
+            </div>
+
+            <div id="daily-quote" class="quote-box">
+                <!-- Quote injected by JS -->
+            </div>
+
+            <div class="card">
+                <div class="intro-text">
+Este checklist existe por um motivo simples: fazer sua história existir.
+
+Não é para te transformar em um escritor perfeito, técnico ou genial em 48 horas. É para tirar você da paralisia, do excesso de dúvida e da sensação constante de “não sei por onde começar”.
+
+Cada ponto aqui não é uma regra rígida, é um ponto de apoio.
+
+Você não precisa executar tudo com excelência. Precisa apenas decidir. Decidir onde escrever, quando escrever, sobre o que escrever e seguir em frente mesmo com insegurança.
+
+Pense nisso como montar o chão antes de dar o primeiro passo. Sem esse chão, você sempre vai sentir que está “caindo” quando tenta escrever.
+
+O que espero de você:
+Todos os pontos do checklist são importantes! Você vai ler todos, depois fazer a tarefa de cada um, feito isso, revisite o checklist sempre que houver dúvidas.
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="showScreen('screen-list')">Ver Checklist</button>
+            <button class="btn btn-secondary" onclick="exportNotes()">Exportar Anotações</button>
+            <button class="btn btn-secondary" style="background-color: #343436;" onclick="resetProgress()">Resetar Progresso</button>
+        </div>
+
+        <!-- List Screen -->
+        <div id="screen-list" class="screen">
+            <div class="sticky-header">
+                <div class="progress-container" style="margin-bottom: 0;">
+                    <div id="list-progress-text" class="progress-text">0/22 pontos (0%)</div>
+                </div>
+            </div>
+            <div id="checklist-container">
+                <!-- Phases and points injected by JS -->
+            </div>
+            <button class="btn btn-primary" onclick="showScreen('screen-dashboard')" style="margin-top: 20px;">Voltar ao Início</button>
+        </div>
+
+        <!-- Details Screen -->
+        <div id="screen-details" class="screen">
+            <div id="details-view">
+                <!-- Details injected by JS -->
+            </div>
+            <button class="btn btn-primary" onclick="showScreen('screen-list')">Voltar à Lista</button>
+        </div>
+
+        <!-- Modal Overlay -->
+        <div id="modal-overlay">
+            <div class="modal-content">
+                <img src="professor-detalhe.jpg" alt="Professor" width="80" height="80" class="modal-prof">
+                <h3 style="color: var(--primary-color); margin-bottom: 10px;">Ponto Concluído!</h3>
+                <p id="modal-phrase" style="margin-bottom: 20px; font-weight: bold;"></p>
+                <button class="btn btn-primary" onclick="closeModal()" style="margin-bottom: 0;">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('SW registered'))
+                    .catch(err => console.log('SW failed', err));
+            });
+        }
+    </script>
+</body>
+</html>
