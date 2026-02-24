@@ -71,13 +71,14 @@
         }
 
         .logo-top {
-            width: 180px; /* maior para ficar bonita e legível */
+            width: 200px; /* maior para ficar bonita e legível */
             height: auto;
-            margin: 0 auto 25px; /* centralizada + espaçamento abaixo */
+            margin: 0 auto 30px; /* centralizada + espaçamento abaixo */
             display: block;
-            background-color: #ECEFF3; /* cinza do fundo do dashboard */
-            padding: 15px; /* preenchimento interno para não ficar colada nas bordas */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* sombra suave para destacar */
+            background-color: #ECEFF3; /* mesmo cinza do dashboard */
+            padding: 0; /* sem padding extra */
+            clip-path: inset(0 5% 0 5%); /* recorte leve nas laterais para remover bordas brancas indesejadas */
+            object-fit: contain; /* mantém proporção sem distorcer */
         }
 
         .professor-img {
@@ -133,7 +134,7 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-bottom: 10px; /* espaçamento padrão entre todos os botões */
+            margin-bottom: 10px;
             transition: var(--transition);
             display: flex;
             justify-content: center;
@@ -176,199 +177,7 @@
             opacity: 0.7;
         }
 
-        /* List Styles */
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            background: var(--bg-color);
-            width: 100%;
-            padding: 10px 0;
-            z-index: 10;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 15px;
-        }
-
-        .phase-wrapper {
-            width: 100%;
-            margin-bottom: 15px;
-        }
-
-        .phase-header {
-            background: var(--white);
-            padding: 15px;
-            border-radius: var(--radius);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .phase-header-content {
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-        }
-
-        .phase-toggle-icon {
-            transition: transform 0.3s ease;
-        }
-
-        .phase-header.collapsed .phase-toggle-icon {
-            transform: rotate(-90deg);
-        }
-
-        .phase-content {
-            padding: 10px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .phase-content.collapsed {
-            display: none;
-        }
-
-        .point-card {
-            background: var(--white);
-            padding: 15px;
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            border-left: 5px solid transparent;
-        }
-
-        .point-title {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .custom-checkbox {
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--primary-color);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .custom-checkbox.checked {
-            background-color: var(--primary-color);
-        }
-
-        .custom-checkbox svg {
-            width: 16px;
-            height: 16px;
-            fill: none;
-            stroke: white;
-            stroke-width: 3;
-            display: none;
-        }
-
-        .custom-checkbox.checked svg {
-            display: block;
-        }
-
-        /* Details View */
-        .details-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .details-content {
-            text-align: center;
-        }
-
-        .large-check-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-            cursor: pointer;
-            background: var(--white);
-            padding: 15px;
-            border-radius: var(--radius);
-            width: 100%;
-            box-shadow: var(--shadow);
-        }
-
-        .notes-area {
-            width: 100%;
-            height: 150px;
-            padding: 15px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border-color);
-            margin-bottom: 20px;
-            font-family: inherit;
-            resize: none;
-        }
-
-        /* Modal */
-        #modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: var(--white);
-            padding: 30px;
-            border-radius: var(--radius);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-        }
-
-        .modal-prof {
-            border-radius: 50%;
-            border: 3px solid var(--primary-color);
-            margin-bottom: 15px;
-        }
-
-        /* Floating Button */
-        .float-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            border: none;
-            cursor: pointer;
-            z-index: 50;
-        }
-
-        .float-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-
-        /* Social Section */
+        /* Social Section - exatamente como no seu arquivo que deu certo */
         .social-section {
             margin-top: 20px;
             text-align: center;
@@ -452,7 +261,7 @@
 
         <!-- Dashboard Screen -->
         <div id="screen-dashboard" class="screen active">
-            <!-- Logo maior, sem arredondamento laranja, fundo cinza do dashboard, centralizada -->
+            <!-- Logo maior, sem borda laranja, fundo cinza do dashboard, centralizada -->
             <img src="professor-dashboard.jpg" alt="Logo Escritor Destravado" class="logo-top">
 
             <h1>Checklist Escritor Destravado em 48h</h1>
@@ -498,7 +307,7 @@
             <button class="btn btn-secondary" style="background-color: #343436;" onclick="reportProblem()">Relatar Problema no App</button>
             <button class="btn btn-secondary" style="background-color: #222; font-size: 12px; padding: 10px;" onclick="startResetTimer()">Resetar Todo o Progresso</button>
 
-            <!-- Social Section - exatamente como estava no seu arquivo que deu certo -->
+            <!-- Social Section - exatamente como no seu arquivo que deu certo -->
             <div class="social-section">
                 <p class="social-text">Você vai aprender mais sobre escrever seu primeiro livro se me seguir nas redes sociais:</p>
                 <div class="social-icons">
