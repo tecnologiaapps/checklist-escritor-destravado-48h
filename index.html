@@ -66,19 +66,19 @@
         h1 {
             font-size: 24px;
             text-align: center;
-            margin: 20px 0;
+            margin: 15px 0 25px;
             color: var(--black);
         }
 
         .logo-top {
-            width: 200px;
+            width: 210px;
             height: auto;
-            margin: 0 auto 25px;
+            margin: 0 auto 15px; /* mais próxima do título */
             display: block;
-            background-color: #ECEFF3; /* fundo cinza do dashboard */
+            background-color: #ECEFF3; /* mesmo cinza do dashboard */
             padding: 0;
             border: none;
-            border-radius: 0; /* sem arredondamento */
+            border-radius: 0;
         }
 
         .professor-img {
@@ -134,7 +134,7 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-bottom: 10px; /* espaçamento uniforme entre todos os botões */
+            margin-bottom: 10px; /* espaçamento igual entre todos os botões */
             transition: var(--transition);
             display: flex;
             justify-content: center;
@@ -395,12 +395,12 @@
             border: none;
             color: var(--primary-color);
             cursor: pointer;
-            padding: 8px; /* mais espaço para o Instagram não cortar */
+            padding: 10px; /* mais espaço para o Instagram não cortar */
             transition: var(--transition);
         }
 
         .social-btn svg {
-            width: 48px; /* maior para não cortar na parte de baixo */
+            width: 48px; /* maior para aparecer inteiro */
             height: 48px;
             fill: currentColor;
         }
@@ -440,7 +440,7 @@
         @media (max-width: 600px) {
             #app { padding: 15px; }
             h1 { font-size: 20px; }
-            .logo-top { width: 170px; }
+            .logo-top { width: 180px; }
             .social-btn svg { width: 44px; height: 44px; }
         }
     </style>
@@ -454,7 +454,7 @@
 
         <!-- Dashboard Screen -->
         <div id="screen-dashboard" class="screen active">
-            <!-- Logo maior, sem borda/arredondamento laranja, fundo cinza do dashboard -->
+            <!-- Logo maior, sem arredondamento, fundo cinza do dashboard, mais próxima do título -->
             <img src="professor-dashboard.jpg" alt="Logo Escritor Destravado" class="logo-top">
 
             <h1>Checklist Escritor Destravado em 48h</h1>
@@ -479,7 +479,6 @@
 
             <div id="daily-quote" class="quote-box"></div>
 
-            <!-- Tutorial Button -->
             <button class="btn btn-tutorial" onclick="watchTutorial()">Assistir Tutorial de Uso</button>
 
             <div class="card">
@@ -495,15 +494,9 @@
             </div>
 
             <button class="btn btn-primary" onclick="showScreen('screen-list')">Ver Checklist</button>
-            
-            <div style="width: 100%; margin-top: 10px; margin-bottom: 5px;">
-                <button class="btn btn-secondary" onclick="exportPDF()" style="font-size: 14px;">Exportar PDF</button>
-            </div>
-            
+            <button class="btn btn-secondary" onclick="exportPDF()">Exportar PDF</button>
             <button class="btn btn-secondary" style="background-color: #56585E;" onclick="openFeedback()">Nos diga o que achou</button>
-            
             <button class="btn btn-secondary" style="background-color: #343436;" onclick="reportProblem()">Relatar Problema no App</button>
-
             <button class="btn btn-secondary" style="background-color: #222; font-size: 12px; padding: 10px;" onclick="startResetTimer()">Resetar Todo o Progresso</button>
 
             <!-- Social Section -->
@@ -511,7 +504,7 @@
                 <p class="social-text">Você vai aprender mais sobre escrever seu primeiro livro se me seguir nas redes sociais:</p>
                 <div class="social-icons">
                     <button onclick="window.location.href='https://www.instagram.com/senorlabiosofc/'" class="social-btn">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     </button>
                     <button onclick="window.location.href='https://youtube.com/@senorlabios?si=LpwaFMTqVwinM8ov'" class="social-btn">
                         <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
