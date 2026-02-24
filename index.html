@@ -123,7 +123,7 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-bottom: 10px; /* espaçamento padrão entre todos os botões */
+            margin-bottom: 10px;
             transition: var(--transition);
             display: flex;
             justify-content: center;
@@ -375,7 +375,7 @@
         .social-icons {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 30px; /* aumentado para dar mais espaço lateral */
             margin-bottom: 20px;
         }
 
@@ -384,13 +384,14 @@
             border: none;
             color: var(--primary-color);
             cursor: pointer;
-            padding: 0;
+            padding: 4px; /* adicionado padding para evitar corte nas bordas */
             transition: var(--transition);
+            border-radius: 50%; /* arredondado para ficar bonito */
         }
 
         .social-btn svg {
-            width: 40px;
-            height: 40px;
+            width: 44px;  /* aumentado de 40px para 44px para evitar corte */
+            height: 44px;
             fill: currentColor;
         }
 
@@ -429,6 +430,7 @@
         @media (max-width: 600px) {
             #app { padding: 15px; }
             h1 { font-size: 20px; }
+            .social-btn svg { width: 40px; height: 40px; } /* fallback menor em telas pequenas se precisar */
         }
     </style>
 </head>
@@ -479,15 +481,11 @@
                 </div>
             </div>
 
-            <!-- Botões com espaçamento padrão (todos usam .btn com margin-bottom: 10px) -->
+            <!-- Botões com espaçamento padrão -->
             <button class="btn btn-primary" onclick="showScreen('screen-list')">Ver Checklist</button>
-            
             <button class="btn btn-secondary" onclick="exportPDF()">Exportar PDF</button>
-            
             <button class="btn btn-secondary" style="background-color: #56585E;" onclick="openFeedback()">Nos diga o que achou</button>
-            
             <button class="btn btn-secondary" style="background-color: #343436;" onclick="reportProblem()">Relatar Problema no App</button>
-            
             <button class="btn btn-secondary" style="background-color: #222; font-size: 12px; padding: 10px;" onclick="startResetTimer()">Resetar Todo o Progresso</button>
 
             <!-- Social Section -->
