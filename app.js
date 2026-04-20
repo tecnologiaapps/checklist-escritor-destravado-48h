@@ -818,27 +818,28 @@ async function exportPDF() {
         doc.text("Meu Progresso - Escritor Destravado", 10, 20);
         doc.setFontSize(10);
         let y = 30;
-        
+       
         points.forEach((p, i) => {
-            if (y > 260) { doc.addPage(); y = 20; }
-            doc.setFont("helvetica", "bold");
-            doc.text(`${state.checks[i] ? "[X]" : "[ ]"} ${p.title}`, 10, y);
-            y += 6;
-            
-            doc.setFont("helvetica", "normal");
-            const contentLines = doc.splitTextToSize(p.content, 180);
-            doc.text(contentLines, 10, y);
-            y += (contentLines.length * 5) + 2;
-            
-            doc.setFont("helvetica", "italic");
-            const note = state.notes[i] || "Sem anotações";
-            const splitNote = doc.splitTextToSize(`Minhas Anotações: ${note}`, 170);
-            doc.text(splitNote, 15, y);
-            y += (splitNote.length * 5) + 8;
-        });
-        
-        const base64 = doc.output('datauristring').split(',')[1];
+            if (y > 260) { 
+                doc.addPage(); 
+                y = 20; 
+            }
 
+            // Título do ponto com checkbox
+            doc.setFont("helvetica", "bold");
+            doc.text(`${state.checks[i] ? "[X]" : "[ ]"} ${p.id}. ${p.title}`, 10, y);
+            y += 8;
+
+            // Anotações do usuário (limpo)
+            doc.setFont("helvetica", "normal");
+            const note = state.notes[i] ? state.notes[i].trim() : "Sem anotações.";
+            const splitNote = doc.splitTextToSize(`Anotações: ${note}`, 170);
+            doc.text(splitNote, 15, y);
+            y += (splitNote.length * 6) + 10;   // espaçamento entre os pontos
+        });
+       
+        // === Parte de salvamento (não mexi em nada aqui) ===
+        const base64 = doc.output('datauristring').split(',')[1];
         if (window.AndroidBridge) {
             window.AndroidBridge.downloadPDF("meu-progresso.pdf", base64);
         } else {
