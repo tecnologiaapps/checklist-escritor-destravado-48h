@@ -862,7 +862,7 @@ async function exportPDF() {
 }
 
 function openFeedback() {
-    window.location.href = FEEDBACK_LINK;
+    window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSfjrBNZZY41LyrZQ5NdXljrE8ZCyjK_fwuOGUG3R9GSnINkMQ/viewform";
 }
 
 function reportProblem() {
