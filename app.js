@@ -784,7 +784,7 @@ function closeAlert() {
 }
 
 function watchTutorial() {
-    window.location.href = TUTORIAL_VIDEO_LINK;
+    window.location.href = "https://youtu.be/XHabrx_sEPE?si=yLn4GfqvJMNaPNJz";
 }
 
 function exportNotes() {
